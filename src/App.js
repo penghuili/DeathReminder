@@ -1,8 +1,8 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { extendTheme, NativeBaseProvider } from 'native-base';
 import React from 'react';
 
-import AppWrapper from './components/AppWrapper';
-import Intro from './views/Intro';
+import Router from './router';
 
 const config = {
   useSystemColorMode: false,
@@ -13,9 +13,9 @@ const customTheme = extendTheme({ config });
 function App() {
   return (
     <NativeBaseProvider theme={customTheme}>
-      <AppWrapper>
-        <Intro />
-      </AppWrapper>
+      <NavigationContainer>
+        <Router />
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 }
