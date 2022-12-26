@@ -1,4 +1,4 @@
-import { Text } from 'native-base';
+import { Link, Text } from 'native-base';
 import React from 'react';
 import DeviceInfo from 'react-native-device-info';
 
@@ -9,6 +9,9 @@ function Settings({ onChangeTheme }) {
   return (
     <ScreenWrapper title="Settings">
       <ListItem onPress={onChangeTheme}>Change theme</ListItem>
+      <ListItem>
+        <Link href="https://github.com/penghuili/DeathReminder">Source code</Link>
+      </ListItem>
       <ListItem>
         <Text>
           v{DeviceInfo.getVersion()}({DeviceInfo.getBuildNumber()})

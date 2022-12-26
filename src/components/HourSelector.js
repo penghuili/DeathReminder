@@ -22,7 +22,7 @@ function HourSelector({ value, onChange }) {
         onValueChange={onChange}
       >
         {hoursOptions.map(h => (
-          <Select.Item key={h} label={h} value={h} />
+          <Select.Item key={h} label={`${h} o'clock`} value={h} />
         ))}
       </Select>
     </>

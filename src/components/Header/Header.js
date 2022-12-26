@@ -8,7 +8,7 @@ function Header({ hasBack, onBack, title }) {
   const { top } = useSafeAreaInsets();
 
   return (
-    <HStack style={{ marginTop: top }} mb="3" alignItems="center">
+    <HStack style={{ marginTop: top + 8 }} mb="3" alignItems="center">
       {hasBack && <Icon name="chevron-left" onPress={onBack} size="8" />}
       <Heading>{title}</Heading>
     </HStack>
