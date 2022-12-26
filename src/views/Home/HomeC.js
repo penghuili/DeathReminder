@@ -14,10 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onUpdateProfile: profileActionCreators.updatePressed,
-  onDeleteProfile: profileActionCreators.deletePressed,
   onAddNotification: notificationsActionCreators.navToAddPressed,
   onUpdateNotification: notificationsActionCreators.navToUpdatePressed,
-  onDeleteNotification: notificationsActionCreators.deletePressed,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

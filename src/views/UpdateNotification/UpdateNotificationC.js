@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onUpdate: notificationsActionCreators.updatePressed,
+  onDelete: notificationsActionCreators.deletePressed,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateNotification);

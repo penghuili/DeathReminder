@@ -1,5 +1,5 @@
 import { format, subYears } from 'date-fns';
-import { Button, HStack, Slider, Text, useColorMode } from 'native-base';
+import { Box, Button, HStack, Slider, Text, useColorMode } from 'native-base';
 import React, { useState } from 'react';
 import DatePicker from 'react-native-date-picker';
 
@@ -7,11 +7,16 @@ import ScreenWrapper from '../../components/ScreenWrapper';
 
 const now = new Date();
 
-function SetupProfile({ onFinish }) {
+function SetupProfile({
+  birthday: birthdayInStore,
+  expectedAge: expectedAgeInStore,
+  onFinish,
+  onDelete,
+}) {
   const { colorMode } = useColorMode();
-  const [birthday, setBirthday] = useState(subYears(now, 20));
+  const [birthday, setBirthday] = useState(birthdayInStore || subYears(now, 30));
   const [showPicker, setShowPicker] = useState(false);
-  const [expectedAge, setExpectedAge] = useState(90);
+  const [expectedAge, setExpectedAge] = useState(expectedAgeInStore || 90);
 
   return (
     <ScreenWrapper hasBack title="Set up profile">
@@ -30,12 +35,20 @@ function SetupProfile({ onFinish }) {
         <Slider.Thumb />
       </Slider>
 
-      <Button
-        onPress={() => onFinish(birthday, expectedAge)}
-        isDisabled={!birthday || !expectedAge}
-      >
-        Finish
-      </Button>
+      <Box flexDirection="row" justifyContent="space-between" mt="4">
+        <Button
+          onPress={() => onFinish(birthday, expectedAge)}
+          isDisabled={!birthday || !expectedAge}
+        >
+          Finish
+        </Button>
+
+        {!!birthdayInStore && !!expectedAgeInStore && (
+          <Button onPress={onDelete} colorScheme="danger">
+            Delete
+          </Button>
+        )}
+      </Box>
 
       <DatePicker
         modal

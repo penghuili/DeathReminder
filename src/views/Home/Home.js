@@ -11,7 +11,6 @@ function Home({
   expectedAge,
   notification,
   onUpdateProfile,
-  onDeleteProfile,
   onAddNotification,
   onUpdateNotification,
   onDeleteNotification,
@@ -62,10 +61,6 @@ function Home({
       <Text>And you can still live: {remaining}</Text>
       <Box mt="2" flexDirection="row" justifyContent="space-between">
         <Button onPress={onUpdateProfile}>Update</Button>
-
-        <Button colorScheme="danger" onPress={onDeleteProfile}>
-          Delete
-        </Button>
       </Box>
 
       <Divider mt="4" mb="4" />
@@ -89,12 +84,6 @@ function Home({
           <Text>{renderNotification()}</Text>
           <Box mt="2" flexDirection="row" justifyContent="space-between">
             <Button onPress={onUpdateNotification}>Update</Button>
-            <Button
-              onPress={() => onDeleteNotification(notification.notification.id)}
-              colorScheme="danger"
-            >
-              Delete
-            </Button>
           </Box>
         </>
       )}

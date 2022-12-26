@@ -28,6 +28,10 @@ function* handleIntroNextPressed() {
   yield call(navigationRef.navigate, routeNames.setupProfile);
 }
 
+function* handleUpdatePressed() {
+  yield call(navigationRef.navigate, routeNames.updateProfile);
+}
+
 function* handleFinishSetupPressed({ payload: { birthday, expectedAge } }) {
   yield call(LocalStorage.set, LocalStorageKeys.birthday, format(birthday, 'yyyy-MM-dd'));
   yield call(LocalStorage.set, LocalStorageKeys.expectedAge, expectedAge);
@@ -46,10 +50,8 @@ export function* profileSagas() {
   yield fork(init);
 
   yield all([
-    takeLatest(
-      [profileActionTypes.INTRO_NEXT_PRESSED, profileActionTypes.UPDATE_PRESSED],
-      handleIntroNextPressed
-    ),
+    takeLatest(profileActionTypes.INTRO_NEXT_PRESSED, handleIntroNextPressed),
+    takeLatest(profileActionTypes.UPDATE_PRESSED, handleUpdatePressed),
     takeLatest(profileActionTypes.FINISH_SETUP_PRESSED, handleFinishSetupPressed),
     takeLatest(profileActionTypes.DELETE_PRESSED, handleDeletePressed),
   ]);
