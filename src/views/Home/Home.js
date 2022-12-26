@@ -55,10 +55,11 @@ function Home({
       <Heading size="sm" mb="2">
         Your profile
       </Heading>
-      <Text>Birthday: {format(birthday, 'yyyy-MM-dd')}</Text>
-      <Text>Expected age: {expectedAge}</Text>
-      <Text>You will die on: {deadDay}</Text>
-      <Text>You can still live: {remaining}</Text>
+      <Text>Your birthday: {format(birthday, 'yyyy-MM-dd')}</Text>
+      <Text>Today: {format(new Date(), 'yyyy-MM-dd')}</Text>
+      <Text mt="2">Your expected age: {expectedAge} years old</Text>
+      <Text>Then you will die on: {deadDay}</Text>
+      <Text>And you can still live: {remaining}</Text>
       <Box mt="2" flexDirection="row" justifyContent="space-between">
         <Button onPress={onUpdateProfile}>Update</Button>
 
@@ -72,18 +73,27 @@ function Home({
       <Heading size="sm" mb="2">
         Notifications
       </Heading>
-      {!notification && <Button onPress={onAddNotification}>Add notification</Button>}
+      {!notification && (
+        <>
+          <Text mb="2">
+            Setup notification to notify yourself daily or weekly that you will die someday.
+          </Text>
+          <Box flexDirection="row">
+            <Button onPress={onAddNotification}>Setup now</Button>
+          </Box>
+        </>
+      )}
 
       {!!notification && (
         <>
           <Text>{renderNotification()}</Text>
           <Box mt="2" flexDirection="row" justifyContent="space-between">
-            <Button onPress={onUpdateNotification}>Edit</Button>
+            <Button onPress={onUpdateNotification}>Update</Button>
             <Button
               onPress={() => onDeleteNotification(notification.notification.id)}
               colorScheme="danger"
             >
-              Cancel
+              Delete
             </Button>
           </Box>
         </>

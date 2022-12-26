@@ -6,9 +6,10 @@ import Icon from '../Icon';
 
 function Header({ hasBack, onBack, title }) {
   const { top } = useSafeAreaInsets();
+
   return (
-    <HStack mt={top} mb="3" alignItems="center">
-      {hasBack && <Icon name="chevron-left" onPress={onBack} size={32} />}
+    <HStack style={{ marginTop: top }} mb="3" alignItems="center">
+      {hasBack && <Icon name="chevron-left" onPress={onBack} size="8" />}
       <Heading>{title}</Heading>
     </HStack>
   );

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { settingsSelectors } from '../../store/settings/settingsSelectors';
-import UIProvider from './UIProvider';
+import ThemeWatcher from './ThemeWatcher';
 
 const mapStateToProps = state => ({
   colorMode: settingsSelectors.getColorMode(state),
@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UIProvider);
+export default connect(mapStateToProps, mapDispatchToProps)(ThemeWatcher);
