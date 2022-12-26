@@ -4,11 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Icon from '../Icon';
 
-function Header({ hasBack, title }) {
+function Header({ hasBack, onBack, title }) {
   const { top } = useSafeAreaInsets();
   return (
-    <HStack pt={top}>
-      {hasBack && <Icon name="chevron-left" />}
+    <HStack mt={top} mb="3" alignItems="center">
+      {hasBack && <Icon name="chevron-left" onPress={onBack} size={32} />}
       <Heading>{title}</Heading>
     </HStack>
   );

@@ -1,60 +1,93 @@
-import notifee, { RepeatFrequency, TriggerType } from '@notifee/react-native';
-import { addSeconds } from 'date-fns';
-import { Box, Button, Text } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import { RepeatFrequency } from '@notifee/react-native';
+import { addYears, differenceInDays, differenceInYears, format, getDay, getHours } from 'date-fns';
+import { Box, Button, Divider, Heading, Text } from 'native-base';
+import React, { useMemo } from 'react';
 
 import ScreenWrapper from '../../components/ScreenWrapper';
+import { weekDayStrings } from '../../lib/constants';
 
-function Home() {
-  const [notifications, setNotifications] = useState([]);
-  useEffect(() => {
-    notifee.getTriggerNotifications().then(ns => {
-      setNotifications(ns);
-    });
-  }, []);
+function Home({
+  birthday,
+  expectedAge,
+  notification,
+  onUpdateProfile,
+  onDeleteProfile,
+  onAddNotification,
+  onUpdateNotification,
+  onDeleteNotification,
+}) {
+  const deadDay = useMemo(
+    () => format(addYears(birthday, expectedAge), 'yyyy-MM-dd'),
+    [birthday, expectedAge]
+  );
 
-  async function displayNotification() {
-    // Request permissions (required for iOS)
-    const result = await notifee.requestPermission();
-    console.log(result);
+  const remaining = useMemo(() => {
+    const now = new Date();
+    const lastDay = addYears(birthday, expectedAge);
 
-    // Create a channel (required for Android)
-    const channelId = await notifee.createChannel({
-      id: 'default',
-      name: 'Default Channel',
-    });
+    if (now >= lastDay) {
+      return 'You are dead.';
+    }
 
-    const trigger = {
-      type: TriggerType.TIMESTAMP,
-      timestamp: addSeconds(new Date(), 5).getTime(), // fire at 11:10am (10 minutes before meeting)
-      repeatFrequency: RepeatFrequency.HOURLY,
-    };
+    const fullYears = differenceInYears(lastDay, now);
+    const fullYearsDate = addYears(now, fullYears);
+    const days = differenceInDays(lastDay, fullYearsDate);
+    return `${fullYears} years, ${days} days.`;
+  }, [birthday, expectedAge]);
 
-    // Create a trigger notification
-    await notifee.createTriggerNotification(
-      {
-        title: 'Meeting with Jane',
-        body: 'Today at 11:20am',
-        android: {
-          channelId,
-        },
-      },
-      trigger
-    );
+  function renderNotification() {
+    if (!notification) {
+      return null;
+    }
+
+    const date = new Date(notification.trigger.timestamp);
+    if (notification.trigger.repeatFrequency === RepeatFrequency.DAILY) {
+      return `You will be notified every day at ${getHours(date)} o'clock.`;
+    }
+
+    return `You will be notified weekly on ${weekDayStrings[getDay(date)]} at ${getHours(
+      date
+    )} o'clock.`;
   }
 
   return (
     <ScreenWrapper title="Home">
-      <Button onPress={displayNotification}>Display Notification</Button>
-      {/* <ChangeThemeButton /> */}
-      {notifications.map(n => (
-        <Box key={n.notification.id}>
-          <Text>
-            {n.notification.title} - {n.notification.id}
-          </Text>
-          <Button onPress={() => notifee.cancelNotification(n.notification.id)}>Cancel</Button>
-        </Box>
-      ))}
+      <Heading size="sm" mb="2">
+        Your profile
+      </Heading>
+      <Text>Birthday: {format(birthday, 'yyyy-MM-dd')}</Text>
+      <Text>Expected age: {expectedAge}</Text>
+      <Text>You will die on: {deadDay}</Text>
+      <Text>You can still live: {remaining}</Text>
+      <Box mt="2" flexDirection="row" justifyContent="space-between">
+        <Button onPress={onUpdateProfile}>Update</Button>
+
+        <Button colorScheme="danger" onPress={onDeleteProfile}>
+          Delete
+        </Button>
+      </Box>
+
+      <Divider mt="4" mb="4" />
+
+      <Heading size="sm" mb="2">
+        Notifications
+      </Heading>
+      {!notification && <Button onPress={onAddNotification}>Add notification</Button>}
+
+      {!!notification && (
+        <>
+          <Text>{renderNotification()}</Text>
+          <Box mt="2" flexDirection="row" justifyContent="space-between">
+            <Button onPress={onUpdateNotification}>Edit</Button>
+            <Button
+              onPress={() => onDeleteNotification(notification.notification.id)}
+              colorScheme="danger"
+            >
+              Cancel
+            </Button>
+          </Box>
+        </>
+      )}
     </ScreenWrapper>
   );
 }

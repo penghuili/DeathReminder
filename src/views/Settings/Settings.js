@@ -1,12 +1,19 @@
 import { Text } from 'native-base';
 import React from 'react';
+import DeviceInfo from 'react-native-device-info';
 
+import ListItem from '../../components/ListItem';
 import ScreenWrapper from '../../components/ScreenWrapper';
 
-function Settings() {
+function Settings({ onChangeTheme }) {
   return (
     <ScreenWrapper title="Settings">
-      <Text>vvv</Text>
+      <ListItem onPress={onChangeTheme}>Change theme</ListItem>
+      <ListItem>
+        <Text>
+          v{DeviceInfo.getVersion()}({DeviceInfo.getBuildNumber()})
+        </Text>
+      </ListItem>
     </ScreenWrapper>
   );
 }

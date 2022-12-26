@@ -10,7 +10,7 @@ function ScreenWrapper({ hasBack, title, children }) {
   const { bgLight, bgDark } = useColors();
 
   return (
-    <ScrollView h="100%" bg={isDark ? bgDark : bgLight}>
+    <ScrollView h="100%" px={2} bg={isDark ? bgDark : bgLight}>
       <StatusBar
         backgroundColor={isDark ? bgDark : bgLight}
         barStyle={isDark ? 'light-content' : 'dark-content'}

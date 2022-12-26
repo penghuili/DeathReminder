@@ -1,22 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { extendTheme, NativeBaseProvider } from 'native-base';
 import React from 'react';
+import Toast from 'react-native-toast-message';
+import { Provider as StoreProvider } from 'react-redux';
 
+import UIProvider from './components/UIProvider';
 import Router from './router';
-
-const config = {
-  useSystemColorMode: false,
-  initialColorMode: 'dark',
-};
-const customTheme = extendTheme({ config });
+import { navigationRef } from './router/navigationRef';
+import store from './store';
 
 function App() {
   return (
-    <NativeBaseProvider theme={customTheme}>
-      <NavigationContainer>
-        <Router />
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <StoreProvider store={store}>
+      <UIProvider>
+        <NavigationContainer ref={navigationRef}>
+          <Router />
+
+          <Toast />
+        </NavigationContainer>
+      </UIProvider>
+    </StoreProvider>
   );
 }
 

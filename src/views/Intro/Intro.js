@@ -1,14 +1,13 @@
+import { Button } from 'native-base';
 import React from 'react';
 
 import ChangeThemeButton from '../../components/ChangeThemeButton';
-import Icon from '../../components/Icon';
 import ScreenWrapper from '../../components/ScreenWrapper';
 
-function Intro() {
+function Intro({ onNext }) {
   return (
-    <ScreenWrapper title="Intro">
-      <Icon name="account-plus" />
-
+    <ScreenWrapper title="Death reminder">
+      <Button onPress={onNext}>Next</Button>
       <ChangeThemeButton />
     </ScreenWrapper>
   );

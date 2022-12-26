@@ -14,7 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1D6F53FFC399B129F1B2CD83 /* libPods-DeathReminder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDFC29792CB89DC2F368E744 /* libPods-DeathReminder.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		B8983A2A2958484C001605CA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8983A2829566792001605CA /* MaterialCommunityIcons.ttf */; };
+		B8983A2B2958C221001605CA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8983A2829566792001605CA /* MaterialCommunityIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,7 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8983A2A2958484C001605CA /* MaterialCommunityIcons.ttf in Resources */,
+				B8983A2B2958C221001605CA /* MaterialCommunityIcons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
