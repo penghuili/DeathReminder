@@ -13,7 +13,6 @@ function Home({
   onUpdateProfile,
   onAddNotification,
   onUpdateNotification,
-  onDeleteNotification,
 }) {
   const deadDay = useMemo(
     () => format(addYears(birthday, expectedAge), 'yyyy-MM-dd'),

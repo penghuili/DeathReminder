@@ -18,8 +18,10 @@ function SetupProfile({
   const [showPicker, setShowPicker] = useState(false);
   const [expectedAge, setExpectedAge] = useState(expectedAgeInStore || 90);
 
+  const hasProfile = !!birthdayInStore && !!expectedAgeInStore;
+
   return (
-    <ScreenWrapper hasBack title="Set up profile">
+    <ScreenWrapper hasBack title={hasProfile ? 'Update profile' : 'Set up profile'}>
       <HStack flexDirection="row" alignItems="center" space="xs">
         <Text>Birthday: {format(birthday, 'yyyy-MM-dd')}</Text>
         <Button variant="ghost" size="xs" onPress={() => setShowPicker(true)}>
@@ -43,7 +45,7 @@ function SetupProfile({
           Finish
         </Button>
 
-        {!!birthdayInStore && !!expectedAgeInStore && (
+        {hasProfile && (
           <Button onPress={onDelete} colorScheme="danger">
             Delete
           </Button>
