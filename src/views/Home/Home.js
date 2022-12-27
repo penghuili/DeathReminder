@@ -39,13 +39,22 @@ function Home({
     }
 
     const date = new Date(notification.trigger.timestamp);
+
+    if (notification.trigger.repeatFrequency === RepeatFrequency.HOURLY) {
+      return 'You will be notified every hour.';
+    }
+
     if (notification.trigger.repeatFrequency === RepeatFrequency.DAILY) {
       return `You will be notified every day at ${getHours(date)} o'clock.`;
     }
 
-    return `You will be notified weekly on ${weekDayStrings[getDay(date)]} at ${getHours(
-      date
-    )} o'clock.`;
+    if (notification.trigger.repeatFrequency === RepeatFrequency.WEEKLY) {
+      return `You will be notified weekly on ${weekDayStrings[getDay(date)]} at ${getHours(
+        date
+      )} o'clock.`;
+    }
+
+    return null;
   }
 
   return (

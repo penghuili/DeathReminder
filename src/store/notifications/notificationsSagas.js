@@ -1,5 +1,5 @@
 import notifee, { AuthorizationStatus, RepeatFrequency, TriggerType } from '@notifee/react-native';
-import { addDays, addWeeks, setHours, startOfDay } from 'date-fns';
+import { addDays, addWeeks, getHours, setHours, startOfDay } from 'date-fns';
 import { all, call, fork, put, select, takeLatest } from 'redux-saga/effects';
 
 import { showToast } from '../../lib/toast';
@@ -21,6 +21,15 @@ function* handleNavToAddPressed() {
 }
 
 function getTimestamp(frequency, data) {
+  if (frequency === RepeatFrequency.HOURLY) {
+    const now = new Date();
+    const hours = getHours(now);
+    const nextHour = hours + 1;
+    const dayStart = startOfDay(now);
+    const date = nextHour > 23 ? addDays(dayStart, 1) : setHours(dayStart, nextHour);
+    return date.getTime();
+  }
+
   if (frequency === RepeatFrequency.DAILY) {
     const { hour } = data;
     const timestamp = setHours(startOfDay(new Date()), hour).getTime();
@@ -80,6 +89,7 @@ function* handleAddPressed({ payload: { frequency, data } }) {
 
     const notifications = yield call(fetchNotifications);
     yield put(notificationsActionCreators.setNotification(notifications[0]));
+    yield call(navigationRef.goBack);
   }
 }
 
@@ -129,7 +139,11 @@ function* handleNavToUpdatePressed() {
 }
 
 function* handleDeletePressed({ payload: { id } }) {
+  if (!id) {
+    return;
+  }
   yield call(notifee.cancelNotification, id);
+  yield call(navigationRef.goBack);
   yield put(notificationsActionCreators.setNotification(null));
   yield call(showToast, 'Notification is deleted.');
 }
