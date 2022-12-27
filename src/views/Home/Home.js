@@ -1,8 +1,9 @@
 import { RepeatFrequency } from '@notifee/react-native';
-import { addYears, differenceInDays, differenceInYears, format, getDay, getHours } from 'date-fns';
+import { addYears, format, getDay, getHours } from 'date-fns';
 import { Box, Button, Divider, Heading, Text } from 'native-base';
 import React, { useMemo } from 'react';
 
+import Countdown from '../../components/Countdown';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import { weekDayStrings } from '../../lib/constants';
 
@@ -18,20 +19,6 @@ function Home({
     () => format(addYears(birthday, expectedAge), 'yyyy-MM-dd'),
     [birthday, expectedAge]
   );
-
-  const remaining = useMemo(() => {
-    const now = new Date();
-    const lastDay = addYears(birthday, expectedAge);
-
-    if (now >= lastDay) {
-      return 'You are dead.';
-    }
-
-    const fullYears = differenceInYears(lastDay, now);
-    const fullYearsDate = addYears(now, fullYears);
-    const days = differenceInDays(lastDay, fullYearsDate);
-    return `${fullYears} years, ${days} days.`;
-  }, [birthday, expectedAge]);
 
   function renderNotification() {
     if (!notification) {
@@ -62,14 +49,18 @@ function Home({
       <Heading size="sm" mb="2">
         Your profile
       </Heading>
-      <Text>Your birthday: {format(birthday, 'yyyy-MM-dd')}</Text>
       <Text>Today: {format(new Date(), 'yyyy-MM-dd')}</Text>
-      <Text mt="2">Your expected age: {expectedAge} years old</Text>
-      <Text>Then you will die on: {deadDay}</Text>
-      <Text>And you can still live: {remaining}</Text>
+      <Text>Your birthday: {format(birthday, 'yyyy-MM-dd')}</Text>
+      <Text>Your expected age: {expectedAge} years old</Text>
       <Box mt="2" flexDirection="row" justifyContent="space-between">
-        <Button onPress={onUpdateProfile}>Update</Button>
+        <Button onPress={onUpdateProfile} size="sm">
+          Update
+        </Button>
       </Box>
+
+      <Text mt="4">Then you will die on: {deadDay}</Text>
+      <Text>And you can still live:</Text>
+      <Countdown birthday={birthday} expectedAge={expectedAge} />
 
       <Divider mt="4" mb="4" />
 
