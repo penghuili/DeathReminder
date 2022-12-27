@@ -4,6 +4,7 @@ import React from 'react';
 import AppLoading from '../components/AppLoading';
 import AddNotification from '../views/AddNotification';
 import ChangeTheme from '../views/ChangeTheme';
+import Intro from '../views/Intro';
 import SetupProfile from '../views/SetupProfile';
 import UpdateNotification from '../views/UpdateNotification';
 import BottomTab from './BottomTab';
@@ -30,6 +31,7 @@ function Router({ isLoadingProfile, hasFinishedSetup }) {
         <NavStack.Screen name={routeNames.addNotification} component={AddNotification} />
         <NavStack.Screen name={routeNames.updateNotification} component={UpdateNotification} />
         <NavStack.Screen name={routeNames.changeTheme} component={ChangeTheme} />
+        <NavStack.Screen name={routeNames.why} component={Intro} />
       </NavStack.Group>
     </NavStack.Navigator>
   );

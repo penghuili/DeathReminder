@@ -25,6 +25,10 @@ function* handleChangeThemePressed({ payload: { colorMode } }) {
   yield put(settingsActionCreators.setTheme(colorMode));
 }
 
+function* handleNavToWhyPressed() {
+  yield call(navigationRef.navigate, routeNames.why);
+}
+
 export function* settingsSagas() {
   yield fork(init);
 
@@ -32,5 +36,6 @@ export function* settingsSagas() {
     takeLatest(settingsActionTypes.BACK, handleBack),
     takeLatest(settingsActionTypes.NAV_TO_CHANGE_THEME_PRESSED, handleNavToChangeThemePressed),
     takeLatest(settingsActionTypes.CHANGE_THEME_PRESSED, handleChangeThemePressed),
+    takeLatest(settingsActionTypes.NAV_TO_WHY_PRESSED, handleNavToWhyPressed),
   ]);
 }

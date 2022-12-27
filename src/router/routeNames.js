@@ -7,4 +7,5 @@ export const routeNames = {
   updateNotification: 'updateNotification',
   settings: 'settings',
   changeTheme: 'changeTheme',
+  why: 'why',
 };
