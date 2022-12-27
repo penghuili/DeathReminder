@@ -80,6 +80,7 @@ function* handleAddPressed({ payload: { frequency, data } }) {
         title: 'Check how long you can still live.',
         android: {
           channelId,
+          pressAction: { id: 'no-action-needed' },
         },
       },
       trigger
@@ -123,6 +124,7 @@ function* handleUpdatePressed({ payload: { frequency, data } }) {
       title: 'Check how long you can still live.',
       android: {
         channelId,
+        pressAction: { id: 'no-action-needed' },
       },
     },
     trigger
@@ -138,13 +140,18 @@ function* handleNavToUpdatePressed() {
   yield call(navigationRef.navigate, routeNames.updateNotification);
 }
 
-function* handleDeletePressed({ payload: { id } }) {
-  if (!id) {
+export function* deleteNotification() {
+  const notification = yield select(notificationsSelectors.getNotification);
+  if (!notification) {
     return;
   }
-  yield call(notifee.cancelNotification, id);
-  yield call(navigationRef.goBack);
+
+  yield call(notifee.cancelNotification, notification.notification.id);
   yield put(notificationsActionCreators.setNotification(null));
+}
+function* handleDeletePressed() {
+  yield call(navigationRef.goBack);
+  yield call(deleteNotification);
   yield call(showToast, 'Notification is deleted.');
 }
 

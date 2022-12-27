@@ -33,13 +33,14 @@ function AddNotification({ onSave }) {
         <HourSelector value={hour} onChange={setHour} />
       )}
 
-      <Button
-        onPress={() => onSave(frequency, { hour, weekDay: weekDay.date })}
-        isDisabled={!weekDay || !hour}
-        mt="4"
-      >
-        Save
-      </Button>
+      <Box flexDirection="row" mt="4">
+        <Button
+          onPress={() => onSave(frequency, { hour, weekDay: weekDay.date })}
+          isDisabled={!weekDay || !hour}
+        >
+          Save
+        </Button>
+      </Box>
     </ScreenWrapper>
   );
 }

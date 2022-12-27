@@ -23,7 +23,7 @@ export const notificationsActionCreators = {
   updatePressed(frequency, data) {
     return { type: notificationsActionTypes.UPDATE_PRESSED, payload: { frequency, data } };
   },
-  deletePressed(id) {
-    return { type: notificationsActionTypes.DELETE_PRESSED, payload: { id } };
+  deletePressed(goBack) {
+    return { type: notificationsActionTypes.DELETE_PRESSED, payload: { goBack } };
   },
 };

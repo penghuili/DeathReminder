@@ -42,7 +42,7 @@ function UpdateNotification({ notification, onUpdate, onDelete }) {
           Save
         </Button>
 
-        <Button onPress={() => onDelete(notification?.notification?.id)} colorScheme="danger">
+        <Button onPress={() => onDelete(true)} colorScheme="danger">
           Delete
         </Button>
       </Box>

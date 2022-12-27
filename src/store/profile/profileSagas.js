@@ -5,6 +5,7 @@ import { LocalStorage, LocalStorageKeys } from '../../lib/localstorage';
 import { showToast } from '../../lib/toast';
 import { navigationRef } from '../../router/navigationRef';
 import { routeNames } from '../../router/routeNames';
+import { deleteNotification } from '../notifications/notificationsSagas';
 import { profileActionCreators, profileActionTypes } from './profileActions';
 
 function* init() {
@@ -44,6 +45,7 @@ function* handleDeletePressed() {
   yield call(LocalStorage.remove, LocalStorageKeys.expectedAge);
   yield put(profileActionCreators.setProfile({ birthday: null, expectedAge: null }));
   yield call(showToast, 'Your profile is deleted.');
+  yield call(deleteNotification);
 }
 
 export function* profileSagas() {
