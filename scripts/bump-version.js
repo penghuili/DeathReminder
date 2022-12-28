@@ -57,6 +57,6 @@ gradlePropsEditor.save(gradlePath);
 console.log(`Version written to ${gradlePath}`);
 
 // Commit a version change
-execSync(`git cc -am v${version} && git tag v${version} && git push && git push --tags`, {
+execSync(`git cc -am v${version} && git push`, {
   stdio: 'inherit',
 });
