@@ -1,17 +1,19 @@
 import { addDays, addYears, differenceInDays, differenceInYears } from 'date-fns';
 import { Box, Text } from 'native-base';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { AppState } from 'react-native';
 
-function Countdown({ birthday, expectedAge }) {
-  const [calculateTime, setCalculateTime] = useState(Date.now());
+function Countdown({ birthday, expectedAge, refresh }) {
+  const [[years, days, rest], setYearsDays] = useState([0, 0, 0]);
   const [hoursText, setHoursText] = useState(null);
 
-  const [years, days, rest] = useMemo(() => {
+  const calculateYearsDays = useCallback(() => {
     const now = new Date();
     const lastDay = addYears(birthday, expectedAge);
 
     if (now >= lastDay) {
-      return [-1, -1, -1];
+      setYearsDays([-1, -1, -1]);
+      return;
     }
 
     const fullYears = differenceInYears(lastDay, now);
@@ -19,13 +21,16 @@ function Countdown({ birthday, expectedAge }) {
     const fullDays = differenceInDays(lastDay, fullYearsDate);
     const fullDaysDate = addDays(fullYearsDate, fullDays);
     const restMiliSeconds = lastDay.getTime() - fullDaysDate.getTime();
-    return [fullYears, fullDays, restMiliSeconds];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [birthday, expectedAge, calculateTime]);
+    setYearsDays([fullYears, fullDays, restMiliSeconds]);
+  }, [birthday, expectedAge]);
 
   useEffect(() => {
-    if (rest <= 0) {
-      setCalculateTime(Date.now());
+    calculateYearsDays();
+  }, [calculateYearsDays]);
+
+  useEffect(() => {
+    if (rest < 1000) {
+      calculateYearsDays();
       return;
     }
 
@@ -48,9 +53,34 @@ function Countdown({ birthday, expectedAge }) {
     return () => {
       clearInterval(id);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rest]);
 
-  if (!rest) {
+  useEffect(() => {
+    if (refresh) {
+      calculateYearsDays();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        calculateYearsDays();
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (rest === -1) {
+    return <Text>You are dead.</Text>;
+  }
+
+  if (!hoursText) {
     return null;
   }
 

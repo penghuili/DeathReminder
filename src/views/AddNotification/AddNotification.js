@@ -34,12 +34,7 @@ function AddNotification({ onSave }) {
       )}
 
       <Box flexDirection="row" mt="4">
-        <Button
-          onPress={() => onSave(frequency, { hour, weekDay: weekDay.date })}
-          isDisabled={!weekDay || !hour}
-        >
-          Save
-        </Button>
+        <Button onPress={() => onSave(frequency, { hour, weekDay: weekDay.date })}>Save</Button>
       </Box>
     </ScreenWrapper>
   );

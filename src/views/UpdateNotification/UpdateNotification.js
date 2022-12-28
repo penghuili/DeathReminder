@@ -35,12 +35,7 @@ function UpdateNotification({ notification, onUpdate, onDelete }) {
       )}
 
       <Box flexDirection="row" justifyContent="space-between" mt="4">
-        <Button
-          onPress={() => onUpdate(frequency, { hour, weekDay: weekDay.date })}
-          isDisabled={!weekDay || !hour}
-        >
-          Save
-        </Button>
+        <Button onPress={() => onUpdate(frequency, { hour, weekDay: weekDay.date })}>Save</Button>
 
         <Button onPress={() => onDelete(true)} colorScheme="danger">
           Delete

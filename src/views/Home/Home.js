@@ -1,4 +1,5 @@
 import { RepeatFrequency } from '@notifee/react-native';
+import { useIsFocused } from '@react-navigation/native';
 import { addYears, format, getDay, getHours } from 'date-fns';
 import { Box, Button, Divider, Heading, Text } from 'native-base';
 import React, { useMemo } from 'react';
@@ -15,6 +16,7 @@ function Home({
   onAddNotification,
   onUpdateNotification,
 }) {
+  const isFocused = useIsFocused();
   const deadDay = useMemo(
     () => format(addYears(birthday, expectedAge), 'yyyy-MM-dd'),
     [birthday, expectedAge]
@@ -60,7 +62,7 @@ function Home({
 
       <Text mt="4">Then you will die on: {deadDay}</Text>
       <Text>And you can still live:</Text>
-      <Countdown birthday={birthday} expectedAge={expectedAge} />
+      <Countdown birthday={birthday} expectedAge={expectedAge} refresh={isFocused} />
 
       <Divider mt="4" mb="4" />
 
