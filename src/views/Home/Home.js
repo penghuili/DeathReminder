@@ -75,7 +75,9 @@ function Home({
             Setup notification to notify yourself daily or weekly that you will die someday.
           </Text>
           <Box flexDirection="row">
-            <Button onPress={onAddNotification}>Setup now</Button>
+            <Button onPress={onAddNotification} size="sm">
+              Setup now
+            </Button>
           </Box>
         </>
       )}
@@ -84,7 +86,9 @@ function Home({
         <>
           <Text>{renderNotification()}</Text>
           <Box mt="2" flexDirection="row" justifyContent="space-between">
-            <Button onPress={onUpdateNotification}>Update</Button>
+            <Button onPress={onUpdateNotification} size="sm">
+              Update
+            </Button>
           </Box>
         </>
       )}

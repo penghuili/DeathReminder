@@ -124,6 +124,7 @@ function* handleUpdatePressed({ payload: { frequency, data } }) {
       title: 'Check how long you can still live.',
       android: {
         channelId,
+        smallIcon: 'ic_notification',
         pressAction: { id: 'no-action-needed' },
       },
     },
